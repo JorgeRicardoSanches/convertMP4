@@ -15,12 +15,12 @@ class S3Controller extends Controller
     {
         $this->validate($request, ['video' => 'required|file|mimetypes:video/mp4,video/mpeg,video/x-matroska']);
         if($request->hasfile('video'))
-         {
+        {
             $file = $request->file('video');
             $name=time().$file->getClientOriginalName();
             $filePath = 'Media/' . $name;
-            Storage::disk('s3')->put($filePath, file_get_contents($file));
-            return back()->with('success','Image Uploaded successfully');
+            $returnVal=Storage::disk('s3')->put($filePath, file_get_contents($file));
+            return back()->with('success','Image Uploaded Successfully');
          }
     }
 }
